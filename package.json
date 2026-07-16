@@ -1,5 +1,5 @@
 {
-  "name": "@ownpay/nodejs",
+  "name": "ownpay-nodejs",
   "version": "1.0.0",
   "description": "Official Node.js SDK for the OwnPay Payment Gateway API",
   "type": "module",
