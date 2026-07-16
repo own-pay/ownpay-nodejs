@@ -1,0 +1,15 @@
+src/
+tests/
+docs/
+.github/
+.vscode/
+.idea/
+coverage/
+node_modules/
+tsconfig.json
+tsup.config.ts
+vitest.config.ts
+.gitignore
+.temporary/
+*.test.ts
+*.spec.ts

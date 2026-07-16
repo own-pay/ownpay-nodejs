@@ -1,0 +1,63 @@
+{
+  "name": "@ownpay/nodejs",
+  "version": "1.0.0",
+  "description": "Official Node.js SDK for the OwnPay Payment Gateway API",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./webhooks": {
+      "types": "./dist/webhooks/index.d.ts",
+      "import": "./dist/webhooks/index.js",
+      "require": "./dist/webhooks/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ownpay",
+    "payment",
+    "gateway",
+    "sdk",
+    "fintech",
+    "payments",
+    "api"
+  ],
+  "author": "OwnPay",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/own-pay/ownpay-nodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/own-pay/ownpay-nodejs/issues"
+  },
+  "homepage": "https://github.com/own-pay/ownpay-nodejs#readme",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}
