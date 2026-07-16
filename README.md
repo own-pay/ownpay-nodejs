@@ -1,6 +1,6 @@
-# @ownpay/nodejs
+# ownpay-nodejs
 
-[![npm version](https://img.shields.io/npm/v/@ownpay/nodejs)](https://www.npmjs.com/package/@ownpay/nodejs)
+[![npm version](https://img.shields.io/npm/v/ownpay-nodejs)](https://www.npmjs.com/package/ownpay-nodejs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 
@@ -25,15 +25,15 @@ Official Node.js SDK for the [OwnPay](https://ownpay.com) Payment Gateway API. A
 ## Installation
 
 ```bash
-npm install @ownpay/nodejs
+npm install ownpay-nodejs
 ```
 
 ```bash
-yarn add @ownpay/nodejs
+yarn add ownpay-nodejs
 ```
 
 ```bash
-pnpm add @ownpay/nodejs
+pnpm add ownpay-nodejs
 ```
 
 ## Quick Start
@@ -41,7 +41,7 @@ pnpm add @ownpay/nodejs
 ### Initialize the Client
 
 ```typescript
-import OwnPay from '@ownpay/nodejs';
+import OwnPay from 'ownpay-nodejs';
 
 // Simple initialization
 const client = new OwnPay('op_your_api_key_here');
@@ -399,7 +399,7 @@ console.log('Customers:', health.customers);
 Always verify webhook signatures to ensure payloads are from OwnPay.
 
 ```typescript
-import { verifyWebhookSignature } from '@ownpay/nodejs/webhooks';
+import { verifyWebhookSignature } from 'ownpay-nodejs/webhooks';
 
 // Express.js example
 app.post('/webhook', (req, res) => {
@@ -494,7 +494,7 @@ import OwnPay, {
   ApiError,
   NetworkError,
   AbortError,
-} from '@ownpay/nodejs';
+} from 'ownpay-nodejs';
 
 try {
   const payment = await client.payments.create({
@@ -670,7 +670,7 @@ const client = new OwnPay({
 The SDK is built with TypeScript and provides comprehensive type definitions.
 
 ```typescript
-import OwnPay from '@ownpay/nodejs';
+import OwnPay from 'ownpay-nodejs';
 import type {
   Payment,
   Transaction,
@@ -679,7 +679,7 @@ import type {
   WebhookPayload,
   CreatePaymentParams,
   ListTransactionsParams,
-} from '@ownpay/nodejs';
+} from 'ownpay-nodejs';
 
 // Types are automatically inferred
 const client = new OwnPay('op_key');
@@ -697,7 +697,7 @@ const payment = await client.payments.create({
 The SDK supports CommonJS for backward compatibility:
 
 ```javascript
-const OwnPay = require('@ownpay/nodejs');
+const OwnPay = require('ownpay-nodejs');
 
 const client = new OwnPay('op_your_key');
 ```
@@ -710,16 +710,16 @@ Import only what you need for smaller bundle sizes:
 
 ```typescript
 // Import only the client
-import OwnPay from '@ownpay/nodejs';
+import OwnPay from 'ownpay-nodejs';
 
 // Import only webhook utilities
-import { verifyWebhookSignature } from '@ownpay/nodejs/webhooks';
+import { verifyWebhookSignature } from 'ownpay-nodejs/webhooks';
 
 // Import specific types
-import type { Payment, Transaction } from '@ownpay/nodejs';
+import type { Payment, Transaction } from 'ownpay-nodejs';
 
 // Import specific errors
-import { ValidationError, AuthenticationError } from '@ownpay/nodejs';
+import { ValidationError, AuthenticationError } from 'ownpay-nodejs';
 ```
 
 ---
@@ -757,7 +757,7 @@ const client = new OwnPay({
 ### Complete Payment Flow
 
 ```typescript
-import OwnPay from '@ownpay/nodejs';
+import OwnPay from 'ownpay-nodejs';
 
 const client = new OwnPay(process.env.OWNPAY_API_KEY!);
 
@@ -816,7 +816,7 @@ async function checkPaymentStatus(paymentId: string) {
 
 ```typescript
 import express from 'express';
-import OwnPay, { verifyWebhookSignature } from '@ownpay/nodejs';
+import OwnPay, { verifyWebhookSignature } from 'ownpay-nodejs';
 
 const app = express();
 const client = new OwnPay(process.env.OWNPAY_API_KEY!);
