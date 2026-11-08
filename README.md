@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 
-Official Node.js SDK for the [OwnPay](https://ownpay.com) Payment Gateway API. A zero-dependency, TypeScript-first SDK for seamless payment integration.
+Official Node.js SDK for the [OwnPay](https://ownpay.org) Payment Gateway API. A zero-dependency, TypeScript-first SDK for seamless payment integration.
 
 ## Features
 
@@ -976,8 +976,8 @@ try {
 
 ## Support
 
-- 📧 Email: support@ownpay.com
-- 📖 Documentation: https://docs.ownpay.com
+- 📧 Email: ping@ownpay.org
+- 📖 Documentation: https://ownpay.org/docs
 - 🐛 Issues: https://github.com/own-pay/ownpay-nodejs/issues
 
 ---
@@ -990,10 +990,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
+Contributions are welcome! Please read our [Contributing Guide](.github/CONTRIBUTING.md) for details.
 
 ---
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for a list of changes.
+See [CHANGELOG.md](.github/CHANGELOG.md) for a list of changes.
