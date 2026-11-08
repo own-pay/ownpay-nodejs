@@ -75,7 +75,12 @@ export class HttpClient {
       );
     }
 
-    this.baseUrl = configuredBaseUrl.replace(/\/+$/, '');
+    let normalizedBaseUrl = configuredBaseUrl;
+    while (normalizedBaseUrl.endsWith('/')) {
+      normalizedBaseUrl = normalizedBaseUrl.slice(0, -1);
+    }
+
+    this.baseUrl = normalizedBaseUrl;
     this.timeout = config.timeout ?? DEFAULT_CONFIG.TIMEOUT;
     this.maxRetries = config.maxRetries ?? DEFAULT_CONFIG.MAX_RETRIES;
     this.apiVersion = config.apiVersion ?? DEFAULT_CONFIG.API_VERSION;
