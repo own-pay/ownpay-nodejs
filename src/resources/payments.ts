@@ -107,7 +107,7 @@ export class PaymentsResource {
    * ```
    */
   async get(paymentId: string, options?: RequestOptions): Promise<Payment> {
-    if (!paymentId || typeof paymentId !== 'string') {
+    if (!paymentId || typeof paymentId !== 'string' || paymentId.trim() === '') {
       throw new ValidationError('Payment ID is required', [
         { code: 'REQUIRED', message: 'Payment ID is required', field: 'payment_id' },
       ]);
@@ -196,7 +196,7 @@ export class PaymentsResource {
 
     if (errors.length > 0) {
       throw new ValidationError(
-        errors[0]!.message,
+        errors[0]?.message ?? 'Validation failed',
         errors.map((e) => ({
           code: e.code,
           message: e.message,

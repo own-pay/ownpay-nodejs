@@ -134,7 +134,8 @@ export function timingSafeEqual(a: string, b: string): boolean {
   bufA.copy(paddedA);
   bufB.copy(paddedB);
 
-  return cryptoTimingSafeEqual(paddedA, paddedB);
+  const sameLength = bufA.length === bufB.length;
+  return cryptoTimingSafeEqual(paddedA, paddedB) && sameLength;
 }
 
 /**

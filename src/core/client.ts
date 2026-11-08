@@ -23,13 +23,13 @@ import {
   sleep,
   calculateBackoff,
   generateUUID,
+  isValidUrl,
 } from './utils.js';
 
 /**
  * Default configuration values.
  */
 const DEFAULT_CONFIG = {
-  BASE_URL: 'https://api.ownpay.com',
   TIMEOUT: 30000,
   MAX_RETRIES: 2,
   API_VERSION: 'v1',
@@ -67,7 +67,20 @@ export class HttpClient {
     }
 
     this.apiKey = config.apiKey;
-    this.baseUrl = (config.baseUrl || DEFAULT_CONFIG.BASE_URL).replace(/\/+$/, '');
+    const configuredBaseUrl = config.baseUrl ?? process.env.OWNPAY_BASE_URL;
+    if (!configuredBaseUrl || !isValidUrl(configuredBaseUrl)) {
+      throw new OwnPayError(
+        'A valid HTTP/HTTPS base URL is required. Set config.baseUrl or OWNPAY_BASE_URL.',
+        'INVALID_CONFIG'
+      );
+    }
+
+    let normalizedBaseUrl = configuredBaseUrl;
+    while (normalizedBaseUrl.endsWith('/')) {
+      normalizedBaseUrl = normalizedBaseUrl.slice(0, -1);
+    }
+
+    this.baseUrl = normalizedBaseUrl;
     this.timeout = config.timeout ?? DEFAULT_CONFIG.TIMEOUT;
     this.maxRetries = config.maxRetries ?? DEFAULT_CONFIG.MAX_RETRIES;
     this.apiVersion = config.apiVersion ?? DEFAULT_CONFIG.API_VERSION;
@@ -113,7 +126,7 @@ export class HttpClient {
           const retryAfter = 'retryAfter' in error
             ? (error as { retryAfter?: number }).retryAfter
             : undefined;
-          const delay = retryAfter
+          const delay = retryAfter !== undefined
             ? retryAfter * 1000
             : calculateBackoff(attempt);
 
@@ -127,7 +140,7 @@ export class HttpClient {
     }
 
     // This should never be reached, but TypeScript needs it
-    throw lastError || new NetworkError('Request failed after all retries');
+    throw lastError ?? new NetworkError('Request failed after all retries');
   }
 
   /**
@@ -146,7 +159,7 @@ export class HttpClient {
 
     // Create abort controller for timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
+    const timeoutId = setTimeout(() => { controller.abort(); }, timeout);
 
     // Combine external signal with our timeout signal
     const { signal, cleanup } = options?.signal
@@ -166,6 +179,10 @@ export class HttpClient {
 
       // Parse response body
       const responseText = await response.text();
+      if (response.ok && responseText.trim() === '') {
+        return undefined as T;
+      }
+
       let responseData: Record<string, unknown>;
 
       try {
@@ -193,7 +210,7 @@ export class HttpClient {
 
       // Handle abort errors (works across all Node.js versions >= 18)
       if (error instanceof Error && error.name === 'AbortError') {
-        throw new AbortError('Request timed out');
+        throw new AbortError(options?.signal?.aborted ? 'Request was aborted' : 'Request timed out');
       }
 
       // Re-throw OwnPay errors
@@ -265,7 +282,7 @@ export class HttpClient {
     timeout: AbortSignal
   ): { signal: AbortSignal; cleanup: () => void } {
     const controller = new AbortController();
-    const onAbort = () => controller.abort();
+    const onAbort = () => { controller.abort(); };
 
     if (external.aborted || timeout.aborted) {
       controller.abort();

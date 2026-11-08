@@ -181,6 +181,28 @@ describe('Webhook Verification', () => {
 
       expect(result).toBe(true);
     });
+
+    it('should reject malformed timestamps', () => {
+      expect(() =>
+        verifyWebhookSignature({
+          payload,
+          signature: validSignature,
+          secret,
+          timestamp: '123abc',
+        })
+      ).toThrow(WebhookVerificationError);
+    });
+
+    it('should reject non-finite timestamps', () => {
+      expect(() =>
+        verifyWebhookSignature({
+          payload,
+          signature: validSignature,
+          secret,
+          timestamp: 'Infinity',
+        })
+      ).toThrow(WebhookVerificationError);
+    });
   });
 
   describe('parseWebhookPayload', () => {

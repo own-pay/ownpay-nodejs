@@ -168,6 +168,7 @@ describe('Utility Functions', () => {
     it('should return false for different strings', () => {
       expect(timingSafeEqual('hello', 'world')).toBe(false);
       expect(timingSafeEqual('hello', 'hell')).toBe(false);
+      expect(timingSafeEqual('a', 'a\0')).toBe(false);
     });
   });
 

@@ -15,7 +15,7 @@
 export interface OwnPayConfig {
   /** API key starting with 'op_' prefix */
   apiKey: string;
-  /** Base URL for the API (default: auto-detect from API key) */
+  /** Base URL for the self-hosted API (or set OWNPAY_BASE_URL) */
   baseUrl?: string;
   /** Request timeout in milliseconds (default: 30000) */
   timeout?: number;
