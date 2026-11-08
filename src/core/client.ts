@@ -67,7 +67,7 @@ export class HttpClient {
     }
 
     this.apiKey = config.apiKey;
-    this.baseUrl = (config.baseUrl || DEFAULT_CONFIG.BASE_URL).replace(/\/+$/, '');
+    this.baseUrl = (config.baseUrl ?? DEFAULT_CONFIG.BASE_URL).replace(/\/+$/, '');
     this.timeout = config.timeout ?? DEFAULT_CONFIG.TIMEOUT;
     this.maxRetries = config.maxRetries ?? DEFAULT_CONFIG.MAX_RETRIES;
     this.apiVersion = config.apiVersion ?? DEFAULT_CONFIG.API_VERSION;
@@ -127,7 +127,7 @@ export class HttpClient {
     }
 
     // This should never be reached, but TypeScript needs it
-    throw lastError || new NetworkError('Request failed after all retries');
+    throw lastError ?? new NetworkError('Request failed after all retries');
   }
 
   /**
@@ -146,7 +146,7 @@ export class HttpClient {
 
     // Create abort controller for timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
+    const timeoutId = setTimeout(() => { controller.abort(); }, timeout);
 
     // Combine external signal with our timeout signal
     const { signal, cleanup } = options?.signal
@@ -265,7 +265,7 @@ export class HttpClient {
     timeout: AbortSignal
   ): { signal: AbortSignal; cleanup: () => void } {
     const controller = new AbortController();
-    const onAbort = () => controller.abort();
+    const onAbort = () => { controller.abort(); };
 
     if (external.aborted || timeout.aborted) {
       controller.abort();

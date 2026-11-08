@@ -77,9 +77,9 @@ export class TransactionsResource {
 
     return {
       items: response.data || [],
-      meta: response.meta || {
-        page: params?.page || 1,
-        per_page: params?.per_page || 25,
+      meta: response.meta ?? {
+        page: params?.page ?? 1,
+        per_page: params?.per_page ?? 25,
         total: 0,
         total_pages: 0,
       },

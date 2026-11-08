@@ -196,7 +196,7 @@ export class PaymentsResource {
 
     if (errors.length > 0) {
       throw new ValidationError(
-        errors[0]!.message,
+        errors[0]?.message ?? 'Validation failed',
         errors.map((e) => ({
           code: e.code,
           message: e.message,

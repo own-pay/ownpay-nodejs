@@ -110,9 +110,9 @@ export class CustomersResource {
 
     return {
       items: response.data || [],
-      meta: response.meta || {
-        page: params?.page || 1,
-        per_page: params?.per_page || 25,
+      meta: response.meta ?? {
+        page: params?.page ?? 1,
+        per_page: params?.per_page ?? 25,
         total: 0,
         total_pages: 0,
       },
@@ -179,7 +179,7 @@ export class CustomersResource {
 
     if (errors.length > 0) {
       throw new ValidationError(
-        errors[0]!.message,
+        errors[0]?.message ?? 'Validation failed',
         errors.map((e) => ({
           code: e.code,
           message: e.message,

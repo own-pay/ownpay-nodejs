@@ -123,7 +123,7 @@ export class ValidationError extends OwnPayError {
   getFieldErrors(): Record<string, string[]> {
     const fieldErrors: Record<string, string[]> = {};
     for (const error of this.errors) {
-      const field = error.field || '_general';
+      const field = error.field ?? '_general';
       if (!fieldErrors[field]) {
         fieldErrors[field] = [];
       }
@@ -240,9 +240,9 @@ export function createErrorFromResponse(
     [key: string]: unknown;
   }
 ): OwnPayError {
-  const message = body.error || 'An unexpected error occurred';
+  const message = body.error ?? 'An unexpected error occurred';
   const requestId = body.request_id;
-  const errors = body.errors || [];
+  const errors = body.errors ?? [];
   const rawResponse = body;
 
   switch (status) {
