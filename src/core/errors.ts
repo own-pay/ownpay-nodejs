@@ -266,7 +266,9 @@ export function createErrorFromResponse(
       const retryAfter = body.retry_after;
       return new RateLimitError(
         message,
-        typeof retryAfter === 'number' ? retryAfter : undefined,
+        typeof retryAfter === 'number' && Number.isFinite(retryAfter) && retryAfter >= 0
+          ? retryAfter
+          : undefined,
         requestId,
         rawResponse
       );

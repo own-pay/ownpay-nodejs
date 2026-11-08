@@ -132,7 +132,7 @@ export class ApiKeysResource {
   async revoke(keyId: number, options?: RequestOptions): Promise<void> {
     this.ensureAdminHeaders(options);
 
-    if (!keyId || typeof keyId !== 'number' || keyId <= 0) {
+    if (!Number.isInteger(keyId) || keyId <= 0) {
       throw new ValidationError('Valid API key ID is required', [
         { code: 'REQUIRED', message: 'Valid API key ID is required', field: 'id' },
       ]);

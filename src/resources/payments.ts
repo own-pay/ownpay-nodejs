@@ -107,7 +107,7 @@ export class PaymentsResource {
    * ```
    */
   async get(paymentId: string, options?: RequestOptions): Promise<Payment> {
-    if (!paymentId || typeof paymentId !== 'string') {
+    if (!paymentId || typeof paymentId !== 'string' || paymentId.trim() === '') {
       throw new ValidationError('Payment ID is required', [
         { code: 'REQUIRED', message: 'Payment ID is required', field: 'payment_id' },
       ]);

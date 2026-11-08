@@ -43,15 +43,12 @@ pnpm add ownpay-nodejs
 ```typescript
 import OwnPay from 'ownpay-nodejs';
 
-// Simple initialization
-const client = new OwnPay('op_your_api_key_here');
-
-// With configuration options
+// Configure the URL of your self-hosted OwnPay instance.
 const client = new OwnPay({
   apiKey: 'op_your_api_key_here',
+  baseUrl: 'https://your-ownpay-domain.com',
   timeout: 30000,        // Request timeout in ms (default: 30000)
   maxRetries: 2,         // Max retry attempts (default: 2)
-  baseUrl: 'https://api.ownpay.com',  // Custom API URL (optional)
 });
 ```
 
@@ -646,7 +643,10 @@ const client = new OwnPay({
 Store your API key securely using environment variables:
 
 ```typescript
-const client = new OwnPay(process.env.OWNPAY_API_KEY!);
+const client = new OwnPay({
+  apiKey: process.env.OWNPAY_API_KEY!,
+  baseUrl: process.env.OWNPAY_BASE_URL!,
+});
 ```
 
 ### Custom Headers
@@ -682,7 +682,10 @@ import type {
 } from 'ownpay-nodejs';
 
 // Types are automatically inferred
-const client = new OwnPay('op_key');
+const client = new OwnPay({
+  apiKey: 'op_key',
+  baseUrl: 'https://your-ownpay-domain.com',
+});
 const payment = await client.payments.create({
   amount: '100.00',
   currency: 'BDT',
@@ -697,9 +700,12 @@ const payment = await client.payments.create({
 The SDK supports CommonJS for backward compatibility:
 
 ```javascript
-const OwnPay = require('ownpay-nodejs');
+const { OwnPay } = require('ownpay-nodejs');
 
-const client = new OwnPay('op_your_key');
+const client = new OwnPay({
+  apiKey: 'op_your_key',
+  baseUrl: 'https://your-ownpay-domain.com',
+});
 ```
 
 ---
@@ -902,10 +908,16 @@ Ensure your API key starts with `op_` and is at least 12 characters long.
 
 ```typescript
 // ❌ Wrong
-const client = new OwnPay('sk_live_...');
+const client = new OwnPay({
+  apiKey: 'sk_live_...',
+  baseUrl: 'https://your-ownpay-domain.com',
+});
 
 // ✅ Correct
-const client = new OwnPay('op_abcdef123456...');
+const client = new OwnPay({
+  apiKey: 'op_abcdef123456...',
+  baseUrl: 'https://your-ownpay-domain.com',
+});
 ```
 
 #### "Authentication failed"

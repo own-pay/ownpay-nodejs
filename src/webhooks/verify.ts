@@ -135,16 +135,16 @@ function verifyTimestamp(timestamp: string | number, tolerance: number): void {
   let timestampSeconds: number;
 
   if (typeof timestamp === 'string') {
-    timestampSeconds = parseInt(timestamp, 10);
-    if (isNaN(timestampSeconds)) {
+    if (timestamp.trim() === '') {
       throw new WebhookVerificationError('Invalid webhook timestamp format');
     }
+    timestampSeconds = Number(timestamp);
   } else {
     timestampSeconds = timestamp;
   }
 
-  // Validate timestamp is positive
-  if (timestampSeconds <= 0) {
+  // Validate timestamp is finite and positive
+  if (!Number.isFinite(timestampSeconds) || timestampSeconds <= 0) {
     throw new WebhookVerificationError('Webhook timestamp must be a positive number');
   }
 
@@ -184,7 +184,8 @@ function timingSafeCompare(a: string, b: string): boolean {
   bufA.copy(paddedA);
   bufB.copy(paddedB);
 
-  return cryptoTimingSafeEqual(paddedA, paddedB);
+  const sameLength = bufA.length === bufB.length;
+  return cryptoTimingSafeEqual(paddedA, paddedB) && sameLength;
 }
 
 /**

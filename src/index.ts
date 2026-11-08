@@ -8,7 +8,10 @@
  * ```typescript
  * import OwnPay from '@ownpay/nodejs';
  *
- * const client = new OwnPay('op_your_api_key_here');
+ * const client = new OwnPay({
+ *   apiKey: 'op_your_api_key_here',
+ *   baseUrl: 'https://your-ownpay-domain.com',
+ * });
  *
  * // Create a payment
  * const payment = await client.payments.create({
@@ -40,12 +43,10 @@ import { HealthResource } from './resources/health.js';
  *
  * @example
  * ```typescript
- * // Initialize with API key
- * const client = new OwnPay('op_xxx...');
- *
  * // Initialize with options
  * const client = new OwnPay({
  *   apiKey: 'op_xxx...',
+ *   baseUrl: 'https://your-ownpay-domain.com',
  *   timeout: 30000,
  *   maxRetries: 3,
  * });
@@ -83,9 +84,6 @@ export class OwnPay {
    *
    * @example
    * ```typescript
-   * // Simple initialization
-   * const client = new OwnPay('op_xxx...');
-   *
    * // With configuration
    * const client = new OwnPay({
    *   apiKey: 'op_xxx...',

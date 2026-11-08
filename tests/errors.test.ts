@@ -213,6 +213,20 @@ describe('Error Classes', () => {
       expect((error as RateLimitError).retryAfter).toBe(60);
     });
 
+    it('should preserve zero retry-after values', () => {
+      const error = createErrorFromResponse(429, { retry_after: 0 });
+
+      expect(error).toBeInstanceOf(RateLimitError);
+      expect((error as RateLimitError).retryAfter).toBe(0);
+    });
+
+    it('should ignore invalid retry-after values', () => {
+      const error = createErrorFromResponse(429, { retry_after: -1 });
+
+      expect(error).toBeInstanceOf(RateLimitError);
+      expect((error as RateLimitError).retryAfter).toBeUndefined();
+    });
+
     it('should create ApiError for 500', () => {
       const error = createErrorFromResponse(500, {
         error: 'Internal error',
