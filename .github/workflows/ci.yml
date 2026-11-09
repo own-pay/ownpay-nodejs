@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22, 24, 26]
+        node-version: [20, 22, 24, 26]
 
     steps:
       - name: Checkout
@@ -25,10 +25,6 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Update npm on Node 20
-        if: matrix.node-version == 20
-        run: npm install --global npm@10.9.4
 
       - name: Install dependencies
         run: npm install
