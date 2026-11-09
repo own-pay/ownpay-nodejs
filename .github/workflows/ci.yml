@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Update npm on Node 20
+        if: matrix.node-version == 20
+        run: npm install --global npm@10.9.4
+
       - name: Install dependencies
         run: npm install
 
