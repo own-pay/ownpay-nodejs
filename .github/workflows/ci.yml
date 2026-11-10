@@ -26,13 +26,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      # npm 10.8.x (bundled with Node 20.20.x) crashes while resolving the
+      # dependency tree, because package-lock.json is gitignored and every run
+      # resolves fresh: "Cannot read properties of null (reading 'edgesOut')".
+      # Node 20 jobs therefore upgrade to npm 11.6.2, which avoids this resolver
+      # crash while leaving the other matrix versions unchanged.
+      - name: Upgrade npm (Node 20 only)
+        if: matrix.node-version == 20
+        run: npm install -g npm@11.6.2
+
       - name: Install dependencies
-        # There is no committed lockfile (package-lock.json is gitignored), so
-        # every run resolves the tree fresh. npm 10.8.x (bundled with Node 20)
-        # has crashed intermittently during that resolution with
-        # "Cannot read properties of null (reading 'edgesOut')". Retry once so a
-        # transient npm crash does not fail the whole job.
-        run: npm install || npm install
+        run: npm install
 
       - name: Type check
         run: npm run lint
